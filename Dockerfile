@@ -33,7 +33,20 @@ RUN cd $HOME && \
 
 RUN go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
 
-RUN /app/.atomone/cosmovisor/genesis/bin/atomoned init "Shadow Sakura" --chain-id $ATOMONE_CHAIN_ID
+RUN /app/.atomone/cosmovisor/genesis/bin/atomoned init "Shadow Sakura" --chain-id $ATOMONE_CHAIN_ID && \
+sed -i \
+-e "s/chain-id = .*/chain-id = \"atomone-1\"/" \
+-e "s/keyring-backend = .*/keyring-backend = \"os\"/" \
+-e "s/node = .*/node = \"tcp:\/\/localhost:26657\"/" $HOME/.atomone/config/client.toml && \
+sed -i -e "/^\[p2p\]/,/^\[/{s/^[[:space:]]*seeds *=.*/seeds = \"$SEEDS\"/}" \
+       -e "/^\[p2p\]/,/^\[/{s/^[[:space:]]*persistent_peers *=.*/persistent_peers = \"$PEERS\"/}" $HOME/.atomone/config/config.toml && \
+sed -i.bak -e "s%^external_address = \"\"%external_address = \"$(wget -qO- eth0.me):26656\"%" $HOME/.atomone/config/config.toml && \
+sed -i -e "s/prometheus = false/prometheus = true/" $HOME/.atomone/config/config.toml && \
+sed -i -e "s/^indexer *=.*/indexer = \"null\"/" $HOME/.atomone/config/config.toml && \
+sed -i -e "s/^pruning *=.*/pruning = \"custom\"/" $HOME/.atomone/config/app.toml && \
+sed -i -e "s/^pruning-keep-recent *=.*/pruning-keep-recent = \"1000\"/" $HOME/.atomone/config/app.toml && \
+sed -i -e "s/^pruning-interval *=.*/pruning-interval = \"10\"/" $HOME/.atomone/config/app.toml && \
+sed -i 's|minimum-gas-prices =.*|minimum-gas-prices = "0.001uatone"|g' $HOME/.atomone/config/app.toml
 
 RUN wget -O $HOME/.atomone/config/genesis.json https://server-7.itrocket.net/mainnet/atomone/genesis.json && \
 wget -O $HOME/.atomone/config/addrbook.json  https://server-7.itrocket.net/mainnet/atomone/addrbook.json
