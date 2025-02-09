@@ -40,7 +40,7 @@ sed -i \
 -e "s/node = .*/node = \"tcp:\/\/localhost:26657\"/" $HOME/.atomone/config/client.toml && \
 sed -i -e "/^\[p2p\]/,/^\[/{s/^[[:space:]]*seeds *=.*/seeds = \"$SEEDS\"/}" \
        -e "/^\[p2p\]/,/^\[/{s/^[[:space:]]*persistent_peers *=.*/persistent_peers = \"$PEERS\"/}" $HOME/.atomone/config/config.toml && \
-sed -i.bak -e "s%^external_address = \"\"%external_address = \"$(wget -qO- eth0.me):${STORY_PORT}656\"" $HOME/.atomone/config/config.toml && \
+sed -i.bak -e "s%^external_address = \"\"%external_address = \"$(wget -qO- eth0.me):26656\"" $HOME/.atomone/config/config.toml && \
 sed -i -e "s/prometheus = false/prometheus = true/" $HOME/.atomone/config/config.toml && \
 sed -i -e "s/^indexer *=.*/indexer = \"null\"/" $HOME/.atomone/config/config.toml && \
 sed -i -e "s/^pruning *=.*/pruning = \"custom\"/" $HOME/.atomone/config/app.toml && \
