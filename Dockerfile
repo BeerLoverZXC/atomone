@@ -29,8 +29,8 @@ RUN cd $HOME && \
     cd atomone && \
     git checkout v1.0.1 && \
     make install && \
-    mv /app/atomone/atomone /app/.atomone/cosmovisor/genesis/bin/atomoned && \
-    chmod +x /app/.story/story/cosmovisor/genesis/bin/atomoned
+    mv /app/go/bin/atomoned /app/.atomone/cosmovisor/genesis/bin/atomoned && \
+    chmod +x /app/.atomone/cosmovisor/genesis/bin/atomoned
 
 RUN go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
 
