@@ -6,7 +6,6 @@ HOME=/app \
 DAEMON_HOME=/app/.atomone \
 DAEMON_ALLOW_DOWNLOAD_BINARIES=false \
 DAEMON_RESTART_AFTER_UPGRADE=true \
-MONIKER="Shadow Sakura" \
 GO_VER="1.22.3" \
 PATH="/usr/local/go/bin:/app/go/bin:${PATH}" \
 SEEDS="f19d9e0f8d48119aa4cafde65de923ae2c29181a@atomone-mainnet-seed.itrocket.net:61656" \
@@ -34,7 +33,7 @@ RUN cd $HOME && \
 
 RUN go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
 
-RUN /app/.atomone/cosmovisor/genesis/bin/atomoned init $MONIKER --chain-id $ATOMONE_CHAIN_ID && \
+RUN /app/.atomone/cosmovisor/genesis/bin/atomoned init "Shadow Sakura" --chain-id $ATOMONE_CHAIN_ID && \
 sed -i \
 -e "s/chain-id = .*/chain-id = \"atomone-1\"/" \
 -e "s/keyring-backend = .*/keyring-backend = \"os\"/" \
