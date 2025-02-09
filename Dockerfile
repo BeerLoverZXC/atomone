@@ -34,8 +34,7 @@ RUN cd $HOME && \
 RUN go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
 
 RUN /app/.atomone/cosmovisor/genesis/bin/atomoned init "Shadow Sakura" --chain-id $ATOMONE_CHAIN_ID && \
-sed -i \
--e "s/chain-id = .*/chain-id = \"atomone-1\"/" \
+sed -i -e "s/chain-id = .*/chain-id = \"atomone-1\"/" \
 -e "s/keyring-backend = .*/keyring-backend = \"os\"/" \
 -e "s/node = .*/node = \"tcp:\/\/localhost:26657\"/" $HOME/.atomone/config/client.toml && \
 sed -i -e "/^\[p2p\]/,/^\[/{s/^[[:space:]]*seeds *=.*/seeds = \"$SEEDS\"/}" \
