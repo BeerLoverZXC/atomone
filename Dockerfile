@@ -34,7 +34,7 @@ RUN cd $HOME && \
 
 RUN go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
 
-RUN atomoned init $MONIKER --chain-id $ATOMONE_CHAIN_ID && \
+RUN /app/.atomone/cosmovisor/genesis/bin/atomoned init $MONIKER --chain-id $ATOMONE_CHAIN_ID && \
 sed -i \
 -e "s/chain-id = .*/chain-id = \"atomone-1\"/" \
 -e "s/keyring-backend = .*/keyring-backend = \"os\"/" \
